@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "skills/search" => "skills#search"
+
   get "/employees/total" => "employees#total"
   resources :employees
 

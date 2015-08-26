@@ -1,4 +1,4 @@
-var JobsController = angular.module('JobsController', ['JobsService', 'EmployeesService', 'ngTable']);
+var JobsController = angular.module('JobsController', ['JobsService', 'EmployeesService', 'ngTable', 'ngTagsInput']);
 
 
 JobsController.controller("JobsList",  ['$scope', '$routeParams', 'Jobs', 'ngTableParams', '$http', function ($scope, $routeParams, Jobs, ngTableParams, $http) {
@@ -22,7 +22,7 @@ JobsController.controller("JobsList",  ['$scope', '$routeParams', 'Jobs', 'ngTab
   $scope.job = Jobs.get({ id: $routeParams.id })
 
   $scope.job.$promise.then(function() {
-    $http.get("/employees/total.json", { params: { "skills[]": $scope.job.skill_ids, status: 0 } }).then(function(resp) {
+    $http.get("/employees/total.json", { params: { "skills[]": $scope.job.skills.map(function(s) { return s.id }), status: 0 } }).then(function(resp) {
 
       $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -30,14 +30,33 @@ JobsController.controller("JobsList",  ['$scope', '$routeParams', 'Jobs', 'ngTab
       }, {
         total: resp.data.total, // length of data
         getData: function ($defer, params) {
-          $defer.resolve(Employees.query({"skills[]": $scope.job.skill_ids, status: 0, page: params.page(), per_page: params.count()}));
+          $defer.resolve(Employees.query({"skills[]": $scope.job.skills.map(function(s) { return s.id }), status: 0, page: params.page(), per_page: params.count()}));
         }
       })
     });
-
   })
 }])
 
-.controller("JobEdit",  ['$scope', '$routeParams', 'Jobs', function ($scope, $routeParams, Jobs) {
+.controller("JobEdit",  ['$scope', '$routeParams', 'Jobs', '$location', '$http', function ($scope, $routeParams, Jobs, $location, $http) {
   $scope.job = Jobs.get({ id: $routeParams.id })
+
+
+  $scope.save = function() {
+    $scope.errors = [];
+
+    $scope.job.skills_list = $scope.job.skills.map(function(s){ return s.title}).join(", ")
+
+    Jobs.save({ id: $scope.job.id, job: $scope.job }).$promise.then(function() {
+      $location.url("jobs/" + $scope.job.id)
+    }, function(error) {
+      for(attr in error.data.errors) {
+        $scope.errors.push(attr + ": " + error.data.errors[attr].join(", "))
+      }
+    });
+  }
+  
+  $scope.loadSkills = function(query) {
+    return $http.get('/skills/search.json?query=' + query);
+  };
+
 }])

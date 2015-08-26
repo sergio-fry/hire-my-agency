@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150825161734) do
     t.float    "expires_in_days"
     t.float    "salary"
     t.text     "contacts"
+    t.datetime "expires_at"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

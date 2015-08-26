@@ -11,5 +11,4 @@ RSpec.describe EmployeesController, type: :controller do
       expect(assigns(:employees)).to include(@employee)
     end
   end
-
 end

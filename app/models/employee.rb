@@ -9,19 +9,13 @@ class Employee < ActiveRecord::Base
   validates :salary, presence: true, numericality: { greater_than: 0 }
   validates :status, presence: true
 
-  has_and_belongs_to_many :skills
-  validates :skills, presence: true
-  include SkillsFinders
+  include HasSkills
 
   STATUS_NEED_JOB = 0
   STATUS_GOT_JOB = 1
 
   def contacts
     [email, phone].compact.join(", ")
-  end
-
-  def skills=(new_skills)
-    super(new_skills.uniq)
   end
 
   private

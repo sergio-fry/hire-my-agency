@@ -1,0 +1,50 @@
+<h1>Employee Edit Form</h1>
+
+<strong>ID: {{employee.id}}</strong>
+ 
+<hr />
+
+<div ng-repeat="error in errors" class="alert alert-danger">
+  {{error}}
+</div>
+
+
+<form ng-submit="save()">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="" ng-model="employee.name">
+  </div>
+
+  <div class="form-group">
+    <label for="salary">Salary (USD)</label>
+    <input type="text" class="form-control" id="salary" placeholder="" ng-model="employee.salary">
+  </div>
+
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select id="status" ng-model="employee.status"  convert-to-number>
+      <option value="0">Need Job</option>
+      <option value="1">Has Job</option>
+    </select>
+  </div>
+
+  <h2>Skills</h2>
+
+  <tags-input ng-model="employee.skills" display-property="title">
+    <auto-complete source="loadSkills($query)"></auto-complete>
+  </tags-input>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" ng-model="employee.email">
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="phone" class="form-control" id="phone" ng-model="employee.phone">
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Save" />
+  <a href="#/employees/{{employee.id}}" class="btn btn-default">Cancel</a>
+</form>
+

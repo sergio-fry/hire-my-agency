@@ -44,7 +44,7 @@ namespace :seed_fake_data do
   end
 
   def seed_data
-    seed_skills(3)
+    seed_skills(5)
     seed_jobs(50)
     seed_employee(150)
   end

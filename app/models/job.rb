@@ -5,11 +5,13 @@ class Job < ActiveRecord::Base
   validates :expires_in_days, presence: true
   validates :salary, presence: true, numericality: { greater_than: 0 }
 
-  has_and_belongs_to_many :skills
-  validates :skills, presence: true
-  include SkillsFinders
+  include HasSkills
 
-  def skills=(new_skills)
-    super(new_skills.uniq)
+  before_save :set_expires_at
+
+  private
+
+  def set_expires_at
+    self.expires_at = created_at + expires_in_days.days
   end
 end

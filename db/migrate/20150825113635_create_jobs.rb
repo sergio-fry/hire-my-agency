@@ -5,6 +5,7 @@ class CreateJobs < ActiveRecord::Migration
       t.float :expires_in_days
       t.float :salary
       t.text :contacts
+      t.datetime :expires_at
 
       t.timestamps null: false
     end

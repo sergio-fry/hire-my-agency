@@ -1,0 +1,19 @@
+<h1>Employees List</h1>
+
+<table ng-table="tableParams" class="table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Salary</th>
+    <th>Need Job</th>
+  </tr>
+
+  <tr ng-repeat="employee in $data">
+    <td class="text-center">{{employee.id}}</td>
+    <td><a href="#/employees/{{employee.id}}">{{employee.name}}</a></td>
+    <td class="text-center">{{employee.salary}} USD</td>
+    <td class="text-center">
+      {{employee.status == 0 ? "Yes" : ""}}
+    </td>
+  </tr>
+</table>
