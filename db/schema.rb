@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20150825161734) do
     t.integer "skill_id"
   end
 
+  add_index "employees_skills", ["employee_id", "skill_id"], name: "index_employees_skills_on_employee_id_and_skill_id", unique: true, using: :btree
+
   create_table "jobs", force: :cascade do |t|
     t.string   "title"
     t.float    "expires_in_days"
@@ -44,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150825161734) do
     t.integer "job_id"
     t.integer "skill_id"
   end
+
+  add_index "jobs_skills", ["job_id", "skill_id"], name: "index_jobs_skills_on_job_id_and_skill_id", unique: true, using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.string "title"

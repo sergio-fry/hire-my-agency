@@ -14,4 +14,41 @@ RSpec.describe Job, type: :model do
     job.valid?
     expect(job.errors.added?(:skills, :blank)).to be_truthy
   end
+
+  describe "#with_skills" do
+    before do
+      @skill_1 = FactoryGirl.create(:skill) 
+      @skill_2 = FactoryGirl.create(:skill) 
+      @skill_3 = FactoryGirl.create(:skill) 
+
+      @job_1 = FactoryGirl.create(:job, skills: [@skill_1])
+      @job_2 = FactoryGirl.create(:job, skills: [@skill_2])
+
+      @job_3 = FactoryGirl.create(:job, skills: [@skill_1, @skill_2])
+    end
+
+    {
+      [@skill_1] => [@job_1, @job_3],
+      [@skill_2] => [@job_2, @job_3],
+      [@skill_1, @skill_2] => [@job_3],
+      [@skill_3] => [],
+    }
+
+    it "should return job_1, job_3 when searching skill_1" do
+      expect(Job.with_skills([@skill_1], 1).to_a.sort).to eq([@job_1, @job_3].sort)
+    end
+
+    it "should return job_2, job_3 when searching skill_2" do
+      expect(Job.with_skills([@skill_2], 1).to_a.sort).to eq([@job_2, @job_3].sort)
+    end
+
+    it "should return job_3 when searching skill_1 and skill_2" do
+      expect(Job.with_skills([@skill_1, @skill_2], 1).to_a.sort).to eq([@job_3].sort)
+    end
+
+    it "should return nothing when searching skill_3" do
+      expect(Job.with_skills([@skill_3], 1).to_a.sort).to be_blank
+    end
+
+  end
 end

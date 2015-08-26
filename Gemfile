@@ -47,3 +47,6 @@ group :development, :test do
 end
 
 gem 'email_validator', :require => 'email_validator/strict'
+
+gem 'will_paginate'
+gem 'responders'

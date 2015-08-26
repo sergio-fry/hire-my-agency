@@ -1,0 +1,32 @@
+<h1>Job Edit Form</h1>
+
+<strong>ID: {{job.id}}</strong>
+<br />created_at: {{job.created_at}}
+ 
+<hr />
+
+<form>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="" value="{{job.title}}">
+  </div>
+
+  <div class="form-group">
+    <label for="salary">Salary (USD)</label>
+    <input type="text" class="form-control" id="salary" placeholder="" value="{{job.salary}}">
+  </div>
+
+  <div class="form-group">
+    <label for="expires_in_days">Expires in days (since created)</label>
+    <input type="text" class="form-control" id="expires_in_days" placeholder="Number of days" value="{{job.expires_in_days}}">
+  </div>
+
+  <div class="form-group">
+    <label for="contacts">Contacts</label>
+    <textarea class="form-control" id="contacts">{{job.contacts}}"</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="#/jobs/{{job.id}}" class="btn btn-default">Cancel</a>
+</form>
+

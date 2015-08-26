@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "/employees/total" => "employees#total"
+  resources :employees
+
+  get "/jobs/total" => "jobs#total"
+  resources :jobs
+
   root 'app#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

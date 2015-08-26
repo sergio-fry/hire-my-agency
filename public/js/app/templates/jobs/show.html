@@ -1,0 +1,47 @@
+<h1>{{job.title}}</h1>
+
+<div class="well">
+  <h2>Salary</h2>
+  <strong>{{job.salary}} USD</strong>
+
+  <h2>Skills</h2>
+  <span ng-repeat="skill in job.skills">
+    <span class="badge">
+      {{skill.title}}
+    </span>
+  </span>
+
+
+  <h2>Contacts</h2>
+  <p>
+    {{job.contacts}}
+  </p>
+
+  <h2>Created At</h2>
+  <p>
+    {{job.created_at}}
+  </p>
+
+  <h2>Expires In Days (since created)</h2>
+  <p>
+    {{job.expires_in_days}} days
+  </p>
+
+  <a href="#/jobs/{{job.id}}/edit" class="btn btn-primary">Edit</a>
+</div>
+
+<h2>Related Employees</h2>
+
+<table ng-table="tableParams" class="table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Salary</th>
+  </tr>
+
+  <tr ng-repeat="employee in $data">
+    <td class="text-center">{{employee.id}}</td>
+    <td><a href="#/employees/{{employee.id}}">{{employee.name}}</a></td>
+    <td class="text-center">{{employee.salary}} USD</td>
+  </tr>
+</table>

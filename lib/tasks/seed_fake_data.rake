@@ -5,7 +5,7 @@ namespace :seed_fake_data do
 
   def seed_skills(n)
     n.round.times do
-      Skill.create! title: "#{Faker::Hacker.adjective} #{Faker::Hacker.abbreviation} #{Faker::App.version}".titleize
+      Skill.create title: "#{Faker::Hacker.adjective} #{Faker::Hacker.abbreviation} #{Faker::App.version}".titleize
 
       print "s"
     end
@@ -20,7 +20,7 @@ namespace :seed_fake_data do
         j.salary = 100 + rand(10000)
         j.contacts = "#{Faker::PhoneNumber.cell_phone}, #{Faker::Internet.email}"
 
-        j.skills = (0..(5 + rand(10))).to_a.map { random_skill }
+        j.skills = (0..(1 + rand(4))).to_a.map { random_skill }
       end
 
       print "j"
@@ -36,19 +36,37 @@ namespace :seed_fake_data do
         em.email = Faker::Internet.email
         em.status = [Employee::STATUS_NEED_JOB, Employee::STATUS_GOT_JOB].sample
 
-        em.skills = (0..(5 + rand(10))).to_a.map { random_skill }
+        em.skills = (0..(1 + rand(15))).to_a.map { random_skill }
       end
 
       print "e"
     end
   end
 
-  desc "50 jobs, 150 employees"
-  task :small => :environment do
-    k = 1.0
+  def seed_data
+    seed_skills(3)
+    seed_jobs(50)
+    seed_employee(150)
+  end
 
-    seed_skills(k * 50)
-    seed_jobs(k * 50)
-    seed_employee(k * 150)
+  task :small => :environment do
+    seed_data
+  end
+
+  task :medium => :environment do
+    10.times { seed_data }
+  end
+
+  task :large => :environment do
+    100.times { seed_data }
+  end
+
+  task :unlimited => :environment do
+    while true
+      seed_data
+      print "#{Employee.count}|#{Job.count}|#{Skill.count}"
+
+      exit if Employee.count > 1000_000
+    end
   end
 end

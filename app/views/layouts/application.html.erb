@@ -2,16 +2,32 @@
 <html ng-app="HireMeApp">
 <head>
   <title>HireMe</title>
+  <%= stylesheet_link_tag '/css/bootstrap.min.css', '/css/bootstrap-theme.min.css', media: 'all' %>
+  <%= stylesheet_link_tag '/css/ng-table.min.css', media: 'all' %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
+
+  <%= javascript_include_tag 'jquery' %>
+  <script src="/js/bootstrap.min.js"></script>
+
   <script src="/js/angular.min.js"></script>
+
   <script src="/js/angular-route.min.js"></script>
+  <script src="/js/angular-resource.min.js"></script>
+
+  <script src="/js/ng-table.min.js"></script>
+
+  <script src="/js/app/services/employees_service.js"></script>
+  <script src="/js/app/services/jobs_service.js"></script>
+  <script src="/js/app/controllers/jobs_controller.js"></script>
   <script src="/js/app/app.js"></script>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-  <%= yield %>
+  <div class="container">
+    <%= yield %>
+  </div>
 
 </body>
 </html>
