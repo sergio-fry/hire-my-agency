@@ -6,6 +6,7 @@ class CreateJobs < ActiveRecord::Migration
       t.float :salary
       t.text :contacts
       t.datetime :expires_at
+      t.integer :skills_cnt, null: false, default: 0
 
       t.timestamps null: false
     end

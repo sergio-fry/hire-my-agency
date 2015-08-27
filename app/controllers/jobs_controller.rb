@@ -3,7 +3,7 @@ class JobsController < ApplicationController
 
   def index
     @jobs = Job.order("salary DESC")
-    @jobs = @jobs.with_skills(params[:skills], 1.0) if params[:skills].present?
+    @jobs = @jobs.with_less_skills_than(params[:skills], 1.0) if params[:skills].present?
     @jobs = @jobs.where(status: params[:status]) if params[:status].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
@@ -12,7 +12,7 @@ class JobsController < ApplicationController
 
   def total
     @jobs = Job.all
-    @jobs = @jobs.with_skills(params[:skills], 1.0) if params[:skills].present?
+    @jobs = @jobs.with_less_skills_than(params[:skills], 1.0) if params[:skills].present?
     @jobs = @jobs.where(status: params[:status]) if params[:status].present?
 
     respond_with total: @jobs.count

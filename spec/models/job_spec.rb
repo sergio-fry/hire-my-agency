@@ -22,34 +22,23 @@ RSpec.describe Job, type: :model do
       @skill_3 = FactoryGirl.create(:skill) 
     end
 
-    describe "#with_skills" do
+    describe "#with_less_skills_than" do
       before do
         @job_1 = FactoryGirl.create(:job, skills: [@skill_1])
         @job_2 = FactoryGirl.create(:job, skills: [@skill_2])
         @job_3 = FactoryGirl.create(:job, skills: [@skill_1, @skill_2])
       end
 
-      {
-        [@skill_1] => [@job_1, @job_3],
-        [@skill_2] => [@job_2, @job_3],
-        [@skill_1, @skill_2] => [@job_3],
-        [@skill_3] => [],
-      }
-
-      it "should return job_1, job_3 when searching skill_1" do
-        expect(Job.with_skills([@skill_1], 1).to_a.sort).to eq([@job_1, @job_3].sort)
+      it "should return job_1 when searching skill_1" do
+        expect(Job.with_less_skills_than([@skill_1], 1).to_a.sort).to eq([@job_1].sort)
       end
 
-      it "should return job_2, job_3 when searching skill_2" do
-        expect(Job.with_skills([@skill_2], 1).to_a.sort).to eq([@job_2, @job_3].sort)
+      it "should return job_2 when searching skill_2" do
+        expect(Job.with_less_skills_than([@skill_2], 1).to_a.sort).to eq([@job_2].sort)
       end
 
       it "should return job_3 when searching skill_1 and skill_2" do
-        expect(Job.with_skills([@skill_1, @skill_2], 1).to_a.sort).to eq([@job_3].sort)
-      end
-
-      it "should return nothing when searching skill_3" do
-        expect(Job.with_skills([@skill_3], 1).to_a.sort).to be_blank
+        expect(Job.with_less_skills_than([@skill_1, @skill_2], 1).to_a.sort).to eq([@job_1, @job_2, @job_3].sort)
       end
     end
 
