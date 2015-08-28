@@ -2,23 +2,14 @@ class EmployeesController < ApplicationController
   respond_to :json
 
   def index
-    @employees = Employee.order(:salary)
-
-    @employees = @employees.with_skills(params[:skills], 1.0) if params[:skills].present?
-    @employees = @employees.where(status: params[:status]) if params[:status].present?
-    @employees = @employees.where("salary <= ?", params[:salary]) if params[:salary].present?
+    @employees = employees_scope.order(:salary)
     @employees = @employees.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
     respond_with @employees
   end
 
   def total
-    @employees = Employee.all
-    @employees = @employees.with_skills(params[:skills], 1.0) if params[:skills].present?
-    @employees = @employees.where(status: params[:status]) if params[:status].present?
-    @employees = @employees.where("salary <= ?", params[:salary]) if params[:salary].present?
-
-    respond_with total: @employees.count
+    respond_with total: employees_scope.count
   end
 
   def show
@@ -41,6 +32,19 @@ class EmployeesController < ApplicationController
   end
 
   private
+
+  def employees_scope
+    match_level = (params[:match] || 1.0).to_f.abs
+    match_level = [0.25, match_level].max
+
+    employees = Employee.all
+    
+    employees = employees.with_skills(params[:skills], match_level) if params[:skills].present?
+    employees = employees.where(status: params[:status]) if params[:status].present?
+    employees = employees.where("salary <= ?", params[:salary].to_f / match_level) if params[:salary].present?
+
+    employees
+  end
 
   def employee_params
     params.require(:employee).permit(:name, :salary, :phone, :email, :status, :skills_list)

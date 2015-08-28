@@ -25,8 +25,7 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
     var jobs_params = { "skills[]": $scope.employee.skills.map(function(s) { return s.id }), active: true, salary: $scope.employee.salary }
 
     $http.get("/jobs/total.json", { params: jobs_params }).then(function(resp) {
-
-      $scope.tableParams = new ngTableParams({
+      $scope.MatchedJobs = new ngTableParams({
         page: 1,            // show first page
         count: 10           // count per page
       }, {
@@ -36,6 +35,22 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
         }
       })
     });
+
+    var related_jobs_params = $.extend({}, jobs_params, { match: 0.75 })
+
+    $http.get("/jobs/total.json", { params: related_jobs_params }).then(function(resp) {
+
+      $scope.RelatedJobs = new ngTableParams({
+        page: 1,            // show first page
+        count: 10           // count per page
+      }, {
+        total: resp.data.total, // length of data
+        getData: function ($defer, params) {
+          $defer.resolve(Jobs.query($.extend({}, related_jobs_params, { page: params.page(), per_page: params.count()})));
+        }
+      })
+    });
+
   })
 }])
 

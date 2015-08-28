@@ -25,9 +25,25 @@
   <a href="#/employees/{{employee.id}}/edit" class="btn btn-primary">Edit</a>
 </div>
 
-<h2>Related Jobs</h2>
+<h2>Matched Jobs</h2>
 
-<table ng-table="tableParams" class="table">
+<table ng-table="MatchedJobs" class="table">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Salary</th>
+  </tr>
+
+  <tr ng-repeat="job in $data">
+    <td class="text-center">{{job.id}}</td>
+    <td><a href="#/jobs/{{job.id}}">{{job.title}}</a></td>
+    <td class="text-center">{{job.salary}} USD</td>
+  </tr>
+</table>
+
+<h2>Related Jobs (75% match)</h2>
+
+<table ng-table="RelatedJobs" class="table">
   <tr>
     <th>ID</th>
     <th>Title</th>
