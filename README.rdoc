@@ -1,28 +1,22 @@
-== README
+== Hire Me Agency
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Recruiting service written with Ruby on Rails and AngualarJS.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+{Demo}[https://hire-me-agency.herokuapp.com/#/]
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+=== Install
+
+    git clone https://github.com/sergio-fry/hire-my-agency.git
+    cd hire-me-agency
+    bundle
+    rake db:create db:migrate
+    rails s
+
+App running at http://0.0.0.0:3000
+
+=== Extra
+
+Add some fake data:
+
+   rake seed_fake_data:small
