@@ -1,0 +1,6 @@
+{
+  "name": "HireMe Agency",
+  "description": "Recruiting service written with Ruby on Rails and AngualarJS",
+  "repository": "https://github.com/sergio-fry/hire-my-agency.git",
+  "keywords": ["ruby", "angularjs", "ruby on rails", "rspec", "postgresl"]
+}
