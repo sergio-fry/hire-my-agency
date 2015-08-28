@@ -20,6 +20,8 @@ class Job < ActiveRecord::Base
     where(id: ids)
   }
 
+  scope :active, lambda { where("expires_at > ?", Time.now) }
+
   before_save :set_expires_at
 
   private

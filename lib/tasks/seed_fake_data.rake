@@ -15,8 +15,8 @@ namespace :seed_fake_data do
     n.round.times do
       Job.create! do |j|
         j.title = Faker::Name.title
-        j.created_at = Faker::Time.between(7.days.ago, Time.now)
-        j.expires_in_days = 5 + rand(10)
+        j.created_at = Faker::Time.between(30.days.ago, Time.now)
+        j.expires_in_days = 15 + rand(30)
         j.salary = 100 + rand(10000)
         j.contacts = "#{Faker::PhoneNumber.cell_phone}, #{Faker::Internet.email}"
 

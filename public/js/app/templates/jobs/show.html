@@ -17,6 +17,9 @@
     {{job.contacts}}
   </p>
 
+  <h2>Active</h2>
+  <p>{{job.expires_at|is_future}}</p>
+
   <h2>Created At</h2>
   <p>
     {{job.created_at}}

@@ -12,6 +12,6 @@
     <td class="text-center">{{job.id}}</td>
     <td><a href="#/jobs/{{job.id}}">{{job.title}}</a></td>
     <td class="text-center">{{job.salary}} USD</td>
-    <td class="text-center">{{job.created_at|is_future}}</td>
+    <td class="text-center">{{job.expires_at|is_future}}</td>
   </tr>
 </table>

@@ -46,10 +46,10 @@ end
 
 group :production do
   gem "rails_12factor"
-
-  gem 'faker', '>= 1.5'
-  gem 'cyrillizer'
 end
+
+gem 'faker', '>= 1.5'
+gem 'cyrillizer'
 
 gem 'email_validator', :require => 'email_validator/strict'
 
