@@ -78,4 +78,26 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
       });
     }
   };
-});
+})
+
+.controller("EmployeeNew",  ['$scope', '$routeParams', 'Employees', '$location', '$http', function ($scope, $routeParams, Employees, $location, $http) {
+  $scope.employee = {skills: []}
+
+  $scope.save = function() {
+    $scope.errors = [];
+
+    $scope.employee.skills_list = $scope.employee.skills.map(function(s){ return s.title}).join(", ")
+
+    Employees.create({ employee: $scope.employee }).$promise.then(function(data) {
+      $location.url("employees/" + data.id)
+    }, function(error) {
+      for(attr in error.data.errors) {
+        $scope.errors.push(attr + ": " + error.data.errors[attr].join(", "))
+      }
+    });
+  }
+  
+  $scope.loadSkills = function(query) {
+    return $http.get('/skills/search.json?query=' + query);
+  };
+}])

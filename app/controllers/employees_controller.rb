@@ -31,6 +31,13 @@ class EmployeesController < ApplicationController
     respond_with @employee
   end
 
+  def create
+    @employee = Employee.new employee_params
+    @employee.save
+
+    respond_with @employee
+  end
+
   private
 
   def employee_params
