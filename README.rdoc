@@ -4,6 +4,9 @@ Recruiting service written with Ruby on Rails and AngualarJS.
 
 {Demo}[https://hire-me-agency.herokuapp.com/#/]
 
+=== Quick Install
+
+{<img src="https://www.herokucdn.com/deploy/button.png">}[https://heroku.com/deploy]
 
 === Install
 
