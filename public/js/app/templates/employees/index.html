@@ -4,6 +4,7 @@
   <tr>
     <th>ID</th>
     <th>Name</th>
+    <th>Skills</th>
     <th>Salary</th>
     <th>Need Job</th>
   </tr>
@@ -11,7 +12,14 @@
   <tr ng-repeat="employee in $data">
     <td class="text-center">{{employee.id}}</td>
     <td><a href="#/employees/{{employee.id}}">{{employee.name}}</a></td>
-    <td class="text-center">{{employee.salary}} USD</td>
+    <td>
+      <span ng-repeat="skill in employee.skills">
+        <span class="badge">
+          {{skill.title}}
+        </span>
+      </span>
+    </td>
+    <td class="text-center">{{employee.salary}}$</td>
     <td class="text-center">
       {{employee.status == 0 ? "Yes" : ""}}
     </td>

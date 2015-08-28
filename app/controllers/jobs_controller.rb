@@ -2,10 +2,10 @@ class JobsController < ApplicationController
   respond_to :json
 
   def index
-    @jobs = jobs_scope.order("salary DESC")
+    @jobs = jobs_scope.order("salary DESC").includes(:skills)
     @jobs = @jobs.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
-    respond_with @jobs
+    respond_with @jobs.as_json(methods: :skills)
   end
 
   def total

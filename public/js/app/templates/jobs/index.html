@@ -4,6 +4,7 @@
   <tr>
     <th>ID</th>
     <th>Title</th>
+    <th>Skills</th>
     <th>Salary</th>
     <th>Active</th>
   </tr>
@@ -11,7 +12,14 @@
   <tr ng-repeat="job in $data">
     <td class="text-center">{{job.id}}</td>
     <td><a href="#/jobs/{{job.id}}">{{job.title}}</a></td>
-    <td class="text-center">{{job.salary}} USD</td>
+    <td>
+      <span ng-repeat="skill in job.skills">
+        <span class="badge">
+          {{skill.title}}
+        </span>
+      </span>
+    </td>
+    <td class="text-center">{{job.salary}}$</td>
     <td class="text-center">{{job.expires_at|is_future}}</td>
   </tr>
 </table>

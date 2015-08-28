@@ -2,10 +2,10 @@ class EmployeesController < ApplicationController
   respond_to :json
 
   def index
-    @employees = employees_scope.order(:salary)
+    @employees = employees_scope.order(:salary).includes(:skills)
     @employees = @employees.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
-    respond_with @employees
+    respond_with @employees.as_json(methods: :skills)
   end
 
   def total
