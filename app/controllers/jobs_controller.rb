@@ -30,6 +30,13 @@ class JobsController < ApplicationController
     respond_with @job
   end
 
+  def create
+    @job = Job.new job_params
+    @job.save
+
+    respond_with @job
+  end
+
   private
 
   def job_params

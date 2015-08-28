@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Job, type: :model do
-  %w( title created_at expires_in_days salary contacts ).each do |attr|
+  %w( title expires_in_days salary contacts ).each do |attr|
     it "should not be valid when #{attr} is blank" do
       job = FactoryGirl.build(:job, attr => nil)
       job.valid?

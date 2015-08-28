@@ -60,3 +60,25 @@ JobsController.controller("JobsList",  ['$scope', '$routeParams', 'Jobs', 'ngTab
   };
 
 }])
+
+.controller("JobNew",  ['$scope', '$routeParams', 'Jobs', '$location', '$http', function ($scope, $routeParams, Jobs, $location, $http) {
+  $scope.job = {skills: []}
+
+  $scope.save = function() {
+    $scope.errors = [];
+
+    $scope.job.skills_list = $scope.job.skills.map(function(s){ return s.title}).join(", ")
+
+    Jobs.create({ job: $scope.job }).$promise.then(function(data) {
+      $location.url("jobs/" + data.id)
+    }, function(error) {
+      for(attr in error.data.errors) {
+        $scope.errors.push(attr + ": " + error.data.errors[attr].join(", "))
+      }
+    });
+  }
+  
+  $scope.loadSkills = function(query) {
+    return $http.get('/skills/search.json?query=' + query);
+  };
+}])

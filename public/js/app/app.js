@@ -14,6 +14,11 @@ HireMeApp.config(function($routeProvider) {
     templateUrl:'/js/app/templates/jobs/index.html',
   })
 
+  .when('/jobs/new', {
+    controller:'JobNew',
+    templateUrl:'/js/app/templates/jobs/edit.html',
+  })
+
   .when('/jobs/:id', {
     controller:'JobDisplay',
     templateUrl:'/js/app/templates/jobs/show.html',
