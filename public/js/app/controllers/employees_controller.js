@@ -22,7 +22,9 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
   $scope.employee = Employees.get({ id: $routeParams.id })
 
   $scope.employee.$promise.then(function() {
-    $http.get("/jobs/total.json", { params: { "skills[]": $scope.employee.skills.map(function(s) { return s.id }), active: true } }).then(function(resp) {
+    var jobs_params = { "skills[]": $scope.employee.skills.map(function(s) { return s.id }), active: true, salary: $scope.employee.salary }
+
+    $http.get("/jobs/total.json", { params: jobs_params }).then(function(resp) {
 
       $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -30,7 +32,7 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
       }, {
         total: resp.data.total, // length of data
         getData: function ($defer, params) {
-          $defer.resolve(Jobs.query({"skills[]": $scope.employee.skills.map(function(s) { return s.id }), active: true, page: params.page(), per_page: params.count()}));
+          $defer.resolve(Jobs.query($.extend({}, jobs_params, {page: params.page(), per_page: params.count()})));
         }
       })
     });
@@ -39,7 +41,6 @@ EmployeesController.controller("EmployeesList",  ['$scope', '$routeParams', 'Emp
 
 .controller("EmployeeEdit",  ['$scope', '$routeParams', 'Employees', '$location', '$http', function ($scope, $routeParams, Employees, $location, $http) {
   $scope.employee = Employees.get({ id: $routeParams.id })
-
 
   $scope.save = function() {
     $scope.errors = [];

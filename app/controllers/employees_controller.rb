@@ -6,6 +6,7 @@ class EmployeesController < ApplicationController
 
     @employees = @employees.with_skills(params[:skills], 1.0) if params[:skills].present?
     @employees = @employees.where(status: params[:status]) if params[:status].present?
+    @employees = @employees.where("salary <= ?", params[:salary]) if params[:salary].present?
     @employees = @employees.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
     respond_with @employees
@@ -15,6 +16,7 @@ class EmployeesController < ApplicationController
     @employees = Employee.all
     @employees = @employees.with_skills(params[:skills], 1.0) if params[:skills].present?
     @employees = @employees.where(status: params[:status]) if params[:status].present?
+    @employees = @employees.where("salary <= ?", params[:salary]) if params[:salary].present?
 
     respond_with total: @employees.count
   end

@@ -5,6 +5,7 @@ class JobsController < ApplicationController
     @jobs = Job.order("salary DESC")
     @jobs = @jobs.with_less_skills_than(params[:skills], 1.0) if params[:skills].present?
     @jobs = @jobs.where(status: params[:status]) if params[:status].present?
+    @jobs = @jobs.where("salary >= ?", params[:salary]) if params[:salary].present?
     @jobs = @jobs.paginate(page: params[:page], per_page: params[:per_page] || 10)
 
     respond_with @jobs
@@ -14,6 +15,7 @@ class JobsController < ApplicationController
     @jobs = Job.all
     @jobs = @jobs.with_less_skills_than(params[:skills], 1.0) if params[:skills].present?
     @jobs = @jobs.where(status: params[:status]) if params[:status].present?
+    @jobs = @jobs.where("salary >= ?", params[:salary]) if params[:salary].present?
 
     respond_with total: @jobs.count
   end
