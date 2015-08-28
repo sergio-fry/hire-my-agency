@@ -42,12 +42,13 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'rb-readline'
-  gem 'cyrillizer'
 end
 
 group :production do
   gem "rails_12factor"
+
   gem 'faker', '>= 1.5'
+  gem 'cyrillizer'
 end
 
 gem 'email_validator', :require => 'email_validator/strict'
